@@ -338,30 +338,30 @@ class FilesystemHelper:
 
     def create(self):
         if not os.path.exists(self.base_dir):
-            os.makedirs(self.base_dir, 0700)
-            log("Blob directory '%s' does not exist. "
-                "Created new directory." % self.base_dir)
+            os.makedirs(self.base_dir, 0750)
+            log('Blob directory \'%s\' does not exist. '
+                'Created new directory.' % self.base_dir)
         if not os.path.exists(self.temp_dir):
-            os.makedirs(self.temp_dir, 0700)
-            log("Blob temporary directory '%s' does not exist. "
-                "Created new directory." % self.temp_dir)
+            os.makedirs(self.temp_dir, 0750)
+            log('Blob temporary directory \'%s\' does not exist. '
+                'Created new directory.' % self.temp_dir)
 
         if not os.path.exists(os.path.join(self.base_dir, LAYOUT_MARKER)):
             layout_marker = open(
                 os.path.join(self.base_dir, LAYOUT_MARKER), 'wb')
             layout_marker.write(self.layout_name)
         else:
-            layout = open(os.path.join(self.base_dir, LAYOUT_MARKER), 'rb'
-                          ).read().strip()
+            layout = open(
+                os.path.join(self.base_dir, LAYOUT_MARKER), 'rb').read().strip()
             if layout != self.layout_name:
                 raise ValueError(
-                    "Directory layout `%s` selected for blob directory %s, but "
-                    "marker found for layout `%s`" %
+                    'Directory layout \`%s\` selected for blob directory %s, but '
+                    'marker found for layout `%s`' %
                     (self.layout_name, self.base_dir, layout))
 
     def isSecure(self, path):
-        """Ensure that (POSIX) path mode bits are 0700."""
-        return (os.stat(path).st_mode & 077) == 0
+        """Ensure that (POSIX) path mode bits are 0750."""
+        return (os.stat(path).st_mode & 027) == 0
 
     def checkSecure(self):
         if not self.isSecure(self.base_dir):
@@ -386,7 +386,7 @@ class FilesystemHelper:
 
         if create and not os.path.exists(path):
             try:
-                os.makedirs(path, 0700)
+                os.makedirs(path, 0750)
             except OSError:
                 # We might have lost a race.  If so, the directory
                 # must exist now
