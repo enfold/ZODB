@@ -1,3 +1,8 @@
+3.9.7-enfold1 (Unreleased)
+==========================
+
+- Give blobstorage read permission for groups
+
 
 3.9.7 (2010-09-28)
 ==================

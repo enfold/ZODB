@@ -891,8 +891,9 @@ def rename_or_copy_blob(f1, f2, chmod=True):
             file1.close()
             file2.close()
         remove_committed(f1)
-    if chmod:
-        os.chmod(f2, stat.S_IREAD)
+
+    os.chmod(f2, stat.S_IREAD | stat.S_IRGRP)
+
 
 if sys.platform == 'win32':
     # On Windows, you can't remove read-only files, so make the
